@@ -1,0 +1,1863 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true 
+  },
+
+  "extends": [
+    "airbnb-base"
+  ],
+  
+  "parserOptions": {
+    "ecmaVersion": 12         
+  },
+
+  "rules": {
+    "no-console": "off",
+    
+  
+    /* =======================================================
+                        Best Practices
+    ======================================================= */
+
+
+    // enforces getter/setter pairs in objects
+    "accessor-pairs": "off", // AirBnb: "off"
+
+    //////////////////////////////////////////////////////////////////////
+    // Enforces return statements in callbacks of array's methods
+    // https://eslint.org/docs/rules/array-callback-return
+    //
+    //   const numbers = [1, 2, 3];
+    //   const total = numbers.reduce(
+    //     function(accumulator, currentValue, currentIndex){
+    //       const sum = accumulator + currentValue;
+    //       // return sum; // => Array.prototype.reduce() expects a return value from function.
+    //     }
+    //   );
+    //
+    //  console.log(total); // => 6
+    //
+    //////////////////////////////////////////////////////////////////////
+    "array-callback-return": ["error", { "allowImplicit": true }], // AirBnB: ["error", { "allowImplicit": true }]
+
+    // treat var statements as if they were block scoped
+    "block-scoped-var": "error", //AirBnB: "error"
+
+    // specify the maximum cyclomatic complexity allowed in a program
+    "complexity": ["off", 11], // AirBnB: ["off", 11]
+
+    // Enforce that class methods use "this".
+    // If a class method doesn't use this, we can/should make it a static method.
+    // https://eslint.org/docs/rules/class-methods-use-this
+    "class-methods-use-this": ["error", { "exceptMethods": [] }], // AirBnB: ["error", { "exceptMethods": [] }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require return statements to either always or never specify values
+    //  Thus this would create an error:
+    //
+    //    function doSomething(condition){
+    //      if (condition){ return true; }
+    //      return;
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "consistent-return": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Specify curly brace conventions for all control statements
+    // Thus this would create and error:
+    //
+    // let condition = true;
+    // condition     = false;
+    // let value     = 0;
+    // if (condition) value += 1;
+    //
+    //////////////////////////////////////////////////////////////////////
+    "curly": ["error", "all"], // AirBnB: ["error", "multi-line"]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require default case in switch statements
+    //  Thus this would create an error:
+    //
+    //    switch (condition){
+    //      case 1: console.log('Case 1'); break;
+    //      case 2: console.log('Case 2'); break;
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "default-case": ["error", { "commentPattern": "^no default$" }], // AirBnB: ["error", { "commentPattern": "^no default$" }]
+
+    // Do this: enable, semver-minor, when eslint v7 is required (which is a major)
+    "default-case-last": "error", // AirBnB: "off"
+    
+    // Do this: enable, semver-minor, when eslint v6.4 is required (which is a major)
+    "default-param-last": "error", // AirBnB: "off"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Encourages use of dot notation whenever possible.
+    //  Thus:
+    //
+    //    const person = { name: 'David', 'fav-food': 'pizza' };
+    //    console.log(person['name']);     // ["name"] is better written in dot-notation.
+    //    console.log(person['fav-food']); // Okay
+    //
+    //////////////////////////////////////////////////////////////////////
+    "dot-notation": ["error", { "allowKeywords": true }], // AirBnB: ["error", { "allowKeywords": true }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Enforces consistent newlines before or after dots
+    // If it is "property", the dot in a member expression should be on the same line as the property portion.
+    //
+    //  const person = { name: 'David' };
+    //  const a = person.
+    //        name; // Expected dot to be on same line as property.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "dot-location": ["error", "property"], // AirBnB: "dot-location": ["error", "property"]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require the use of === and !==
+    //  AirBnB's sets this to ["error", "always", { "null": "ignore" }]
+    //  Consequently, it will error in all cases except when encountering null.
+    //
+    //  Presumably, this is to allow the individual to determine elsewhere
+    //  how they want to handle nil cases. As a reminder, javascript behaves as follows:
+    //
+    //    const x = undefined;
+    //
+    //    if (x == null){ console.log('true'); } 
+    //    else { console.log('false'); }
+    //
+    //    if (x === null){ console.log('true'); } 
+    //    else { console.log('false'); }
+    //
+    //    // Result: true & false are logged.
+    //
+    //
+    //  Personally, I think it's safer to NEVER use == and !=
+    //  Thus I left this configuration setting as it was, but also set
+    //  "no-eq-null": "error"
+    //  AirBnB has "no-eq-null": "off", so they must like using it for nil cases.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "eqeqeq": ["error", "always", { "null": "ignore" }], // AirBnB: ["error", "always", { "null": "ignore" }]
+  
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require grouped accessor pairs in object literals and classes.
+    //  A getter and setter for the same property don't necessarily have to be defined adjacent to each other.
+    //  While it is allowed to define the pair for a getter or a setter anywhere in an object or class definition, it's considered a best practice to group accessor functions for the same property.
+    //
+    //    const obj = {
+    //      _number: 1,
+    //      get number(){ return this.val; },
+    //      letter: 'A',
+    //      set number(value){ this.val = value; } // Accessor pair getter 'number' and setter 'number' should be grouped.
+    //    };
+    //
+    //////////////////////////////////////////////////////////////////////
+    "grouped-accessor-pairs": ["error", "anyOrder"], // AirBnB: "off"
+
+    // make sure for-in loops have an if statement
+    "guard-for-in": "error", // AirBnB: "error"
+
+    // Enforce a maximum number of classes per file
+    // AirBnB's setup would only allow 1 class per file.
+    // That's a bit restrictive for me.
+    "max-classes-per-file": "off", // AirBnB: ["error", 1],
+    
+    // Disallow the use of alert, confirm, and prompt
+    "no-alert": "off", //AirBnB: "warn"
+
+    // Disallow use of arguments.caller or arguments.callee
+    "no-caller": "error",
+
+    //* Look at this one again!
+    // disallow lexical declarations in case/default clauses
+    // https://eslint.org/docs/rules/no-case-declarations.html
+    "no-case-declarations": "error", //AirBnB: "error"
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow returning value in constructor
+    //  AirBnB sets this to "off", but I can't think of a reason why
+    //  You would ever want to do this, so I set it to "error". Thus/
+    //
+    //  class Person {
+    //    constructor(name){
+    //      this.name = name;   
+    //      return 'Testing 123...'; // Unexpected return statement in constructor
+    //    }
+    //  }
+    //
+    //////////////////////////////////////////////////////////////////////
+      
+    "no-constructor-return": "error", // AirBnB: "off"
+
+    // Disallow division operators explicitly at beginning of regular expression
+    "no-div-regex": "off", // AirBnB: "off"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Disallow else after a return in an if
+    // AirBnB had it set up so that it also errored with else if.
+    // I prefer to allow else if. Thus:
+    //
+    //  function test(){
+    //    let condition = true;
+    //    condition     = false;
+    //
+    //    if (condition === true){
+    //      return true;
+    //    } else if (condition === null){
+    //      return true;
+    //    } else { // Unnecessary 'else' after 'return'.
+    //      return false;
+    //    }
+    //  }
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    "no-else-return": ["error", { "allowElseIf": true }], // AirBnB: "no-else-return": ["error", { "allowElseIf": false }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow empty functions, except for standalone funcs/arrows
+    //  If we do this: "no-empty-function": ["error", { "allow": []}],
+    //  We will get errors for:
+    //
+    //    function test1(){} // => Unexpected empty function 'test1'
+    //
+    //    const test2 = () => {}; // => Unexpected empty arrow function.
+    //
+    //    const test3 = () => { /* I'm not empty */ }; // => Okay
+    //
+    //    const obj = {
+    //      method1: function(){} // => Unexpected empty method 'method1'
+    //    };
+    //
+    //  But AirBnB allows these:
+    //
+    //    "no-empty-function": ["error", { "allow": ["arrowFunctions", "functions", "methods" ] }]
+    //
+    //  While still erroring for empty getters, setters, 
+    //  constructors, generators, async functions, etc. I'm okay with this.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-empty-function": ["error", { "allow": ["arrowFunctions", "functions", "methods" ] }],
+
+    // Disallow empty destructuring patterns. Thus
+    // const person = { firstName: 'David', age: 12 };
+    // const { } = person; // => Unexpected empty object pattern.
+    "no-empty-pattern": "error", // AirBnB: "error"
+
+    // Disallow comparisons to null without a type-checking operator.
+    // In other words, use ===
+    "no-eq-null": "error", // AirBnB: "off"
+
+    // Disallow use of eval()
+    "no-eval": "error", // AirBnB: "error"
+
+    // Disallow adding to native types. Thus:
+    // Array.prototype.length = 'Your guess is as good as mine'; 
+    // => Array prototype is read only, properties should not be added.
+    "no-extend-native": "error", // AirBnB: "error"
+
+    // Disallow unnecessary function binding
+    "no-extra-bind": "error", // AirBnB: "error"
+
+    // Disallow Unnecessary Labels
+    // https://eslint.org/docs/rules/no-extra-label
+    "no-extra-label": "error", // AireBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow fallthrough of case statements
+    //  On the face of it, this seems like a good practice to "error" on.
+    //  Thus:
+    //
+    //    let value = 0;
+    //    value = 1;
+    //
+    //    switch (value){
+    //      case 1: console.log('Case 1.');
+    //      // Expected a 'break' statement before 'case'
+    //      case 2: console.log('Case 2.');
+    //        break;
+    //      default: console.log('Default Case.');
+    //    }
+    //
+    //
+    //  And fortunately, ESLint is smart enough to still allow things like this:
+    //
+    //    function test(){
+    //      let value = 0;
+    //      value     = 1;
+    //
+    //      switch (value){
+    //        case 1:  return 1;
+    //        case 2:  return 2;
+    //        default: return 0;
+    //      }
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-fallthrough": "error", // AirBnB: "error"
+
+    // Disallow the use of leading or trailing decimal points in numeric literals
+    // const value = .5; // => A leading decimal can be confused with a dot.
+    "no-floating-decimal": "error", // AirBnB: "error"
+
+    // Disallow reassignments of native objects or read-only globals
+    // window      = {};               // => Read-only global 'window' should not be modified.
+    // window.test = 'Testing 123...'; // => Okay
+    // Object      = null;             // => Read-only global 'Object' should not be modified.
+    // undefined   = 1;                // => Read-only global 'undefined' should not be modified.
+    "no-global-assign": ["error", { "exceptions": [] }], // AirBnB: ["error", { "exceptions": [] }]
+
+    // Deprecated in favor of no-global-assign
+    "no-native-reassign": "off", // AirBnB: "off",
+
+    // Disallow implicit type conversions
+    // The configuration for this is kind of difficult to understand.
+    // It seems to still be allowing
+    // This is exactly what AirBnB is doing.
+    "no-implicit-coercion": ["off", {
+      "boolean": false,
+      "number": true,
+      "string": true,
+      "allow": []
+    }],
+
+    // Disallow var and named functions in global scope
+    // I don't actually want "error", but I couldn't get it to work anyways.
+    "no-implicit-globals": "off", // AirBnB: "off"
+
+    // Disallow use of eval()-like methods
+    // setTimeout("alert('Hi!');", 100); // => Imlied eval. Consider passing a function instead of a string.
+    "no-implied-eval": "error", // AirBnB: "error",
+
+    // disallow this keywords outside of classes or class-like objects
+    "no-invalid-this": "off", // AirBnb: "off"
+
+    // Disallow usage of __iterator__ property
+    "no-iterator": "error", // AirBnB: "error"
+
+    // Disallow use of labels for anything other then loops and switches
+    "no-labels": ["error", { "allowLoop": false, "allowSwitch": false }], // AirBnB: ["error", { "allowLoop": false, "allowSwitch": false }]
+
+    // Disallow unnecessary nested blocks
+    "no-lone-blocks": "error", // AirBnB: "error"
+
+    // Disallow creation of functions within loops
+    "no-loop-func": "error", // AirBnB: "error:
+
+    //! Disallow magic numbers
+    //! I'm not entirely cenrtain what this does, but I'm going to turn it all the way off.
+    "no-magic-numbers": "off",
+
+    // AirBnB:
+    // "no-magic-numbers": ["off", {
+    //   "ignore": [],
+    //   "ignoreArrayIndexes": true,
+    //   "enforceConst": true,
+    //   "detectObjects": false
+    // }]
+
+    // Disallow use of multiple spaces
+    // If set to "error", then:
+    // const x      = 1; // => Multiple spaces found before '='.
+    // However, I prefer to be able to do that kind of thing.
+    "no-multi-spaces": "off", // AirBnB: ["error", { "ignoreEOLComments": false }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow use of multiline strings. 
+    //  It's possible to create multiline strings in JavaScript by using a slash before a newline.
+    //  Some consider this to be a bad practice as it was an undocumented feature of JavaScript 
+    //  that was only formalized later. If set to "error":
+    //
+    //    const str = 'I am a string. \
+    //    I span several lines.'; // => Multiline support is limited to browsers supporting ES5 only.
+    //    I think this is okay.
+    //
+    //  The rationale for excluding it seems pretty weak, so I'm going to allow it.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-multi-str": "off", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow use of new operator when not part of the assignment or comparison.
+    //  In other words no using new for side-effects:
+    //
+    //    class Test {
+    //      constructor(){
+    //        console.log('New test instance created.');
+    //      }
+    //    }
+    //
+    //    new Test(); // => Do not use 'new' for side effects.
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    "no-new": "error", // AirBnB: "error"
+
+    // Disallow use of new operator for Function object.
+    // const add = new Function('a', 'b', 'return a + b'); // => The Function constructor is eval.
+    "no-new-func": "error", // AirBnB: "error"
+
+    // Disallows creating new instances of String, Number, and Boolean
+    // const stringObject = new String('Hello world'); // => Do not use String as a constructor.
+    "no-new-wrappers": "error", // AirBnB: "error"
+
+    // Disallow use of (old style) octal literals.
+    // Octal literals are numerals that begin with a leading zero, such as: 071
+    // Because the leading zero which identifies an octal literal has been a 
+    // source of confusion and error in JavaScript code, ECMAScript 5 
+    // deprecates the use of octal numeric literals.
+    "no-octal": "error", // AirBnB: "error"
+
+    // Disallow use of octal escape sequences in string literals, such as
+    // var foo = 'Copyright \251';
+    "no-octal-escape": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // AirBnB does this:
+    //
+    // "no-param-reassign": ["error", {
+    //   "props": true,
+    //   "ignorePropertyModificationsFor": [
+    //     "acc", // for reduce accumulators
+    //     "accumulator", // for reduce accumulators
+    //     "e", // for e.returnvalue
+    //     "ctx", // for Koa routing
+    //     "context", // for Koa routing
+    //     "req", // for Express requests
+    //     "request", // for Express requests
+    //     "res", // for Express responses
+    //     "response", // for Express responses
+    //     "$scope", // for Angular 1 scopes
+    //     "staticContext" // for ReactRouter context  
+    //   ]
+    // }]
+    //
+    //
+    //  Thus you wouldn't be able to do this:
+    //
+    //    function multiply(a, b){
+    //      a = a || 1; // Assignment to function to parameter 'a'.
+    //      b = b || 1; // Assignment to function to parameter 'b'.
+    //      return a * b;
+    //    }
+    //
+    //
+    //  The rationale for prohibiting this kind of behavior is that
+    //  Often, assignment to function parameters is unintended and indicative 
+    //  of a mistake or programmer error.
+    //
+    //  I don't feel that way, and will therefore set it to "off".
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-param-reassign": "off",
+    
+
+    // Disallow usage of __proto__ property
+    "no-proto": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow declaring the same variable more than once
+    //  This rule is distinct from no-shadow, and presumably
+    //  only applies to vars since you can't do that with let or const anyways.
+    //  Thus:
+    //
+    //    function test(){
+    //      var x = 1;
+    //      var x = 2; // => 'x' is already defined.
+    //      return x;
+    //    }
+    //
+    //  This will also prevent this:
+    //
+    //    for (var i = 0; i < 10; i++){
+    //      console.log('Hello');
+    //    }
+    //
+    //    for (var i = 0; i < 10; i++){ // => 'i' is already defined.
+    //      console.log('Goodbye.');
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-redeclare": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //   Disallow certain object properties
+    //   https://eslint.org/docs/rules/no-restricted-properties
+    //   This rule is essentially prohibiting the usage of certain built-in properties.
+    //   For example:
+    //
+    //    const x = window.isFinite;
+    //    // => 'window.isFinite' is restricted from being used.
+    //    // => Plse use Number.isFinite instead.
+    // Here's what AirBnB does:
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-restricted-properties": ["error", {
+    "object": "arguments",
+    "property": "callee",
+      "message": "arguments.callee is deprecated"
+    }, {
+      "object": "global",
+      "property": "isFinite",
+      "message": "Please use Number.isFinite instead"
+    }, {
+      "object": "self",
+      "property": "isFinite",
+      "message": "Please use Number.isFinite instead"
+    }, {
+      "object": "window",
+      "property": "isFinite",
+      "message": "Please use Number.isFinite instead"
+    }, {
+      "object": "global",
+      "property": "isNaN",
+      "message": "Please use Number.isNaN instead"
+    }, {
+      "object": "self",
+      "property": "isNaN",
+      "message": "Please use Number.isNaN instead"
+    }, {
+      "object": "window",
+      "property": "isNaN",
+      "message": "Please use Number.isNaN instead"
+    }, {
+      "property": "__defineGetter__",
+      "message": "Please use Object.defineProperty instead."
+    }, {
+     "property": "__defineSetter__",
+     "message": "Please use Object.defineProperty instead."
+    }, {
+      "object": "Math",
+      "property": "pow",
+      "message": "Use the exponentiation operator (**) instead."
+    }],
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow use of assignment in return statement. Thus:
+    //
+    //    function test() {
+    //      var x;
+    //      return x = 1 + 3;  // => Return statement should  not contain assignment.
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-return-assign": ["error", "always"], // AirBnB: ["error", "always"]
+
+    //! Read up on this a bit more: https://eslint.org/docs/rules/no-return-await
+    // Disallow redundant `return await`
+    // This rule aims to prevent a likely common performance hazard 
+    // due to a lack of understanding of the semantics of async function.
+    "no-return-await": "error", // AirBnB: "error:
+
+    // Disallow use of `javascript:` urls.
+    "no-script-url": "error", // AirBnB: "error"
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow self assignment. Thus:
+    //
+    //    function test(x){
+    //      x = x || 1; // Okay (At least for this specific rule).
+    //      return x;
+    //    }
+    //
+    //    var y = 2;
+    //    y = y; // => 'y' is assigned to itself.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-self-assign": ["error", { "props": true }], // AirBnb: ["error", { "props": true }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow comparisons where both sides are exactly the same. Thus:
+    //
+    //    const obj1 = { test: 'Testing 123...' };
+    //    const obj2 = obj1;
+    //
+    //    if (obj1 === obj2){ // Okay.
+    //      console.log("They're the same.");
+    //    }
+    //
+    //    if (obj1 === obj1){ // => Comparing to itself is potentially pointless.
+    //      console.log("They're the same.");
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    "no-self-compare": "error",  // AirBnB: "error"
+
+    // Disallow use of comma operator
+    "no-sequences": "error", // AirBnB: "error"
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Restrict what can be thrown as an exception.
+    //  It is considered good practice to only throw the Error object 
+    //  itself or an object using the Error object as base objects 
+    //  for user-defined exceptions. The fundamental benefit of Error 
+    //  objects is that they automatically keep track of where they were built and originated.
+    //  throw 'Whoops!'; // => Expected an error object to be thrown.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-throw-literal": "error",
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow unmodified conditions of loops. Thus:
+    // 
+    //    let condition = false;
+    //    condition     = true;
+    //    while (condition){ // => 'condition' is not modified in this loop.
+    //      console.log('Hello');
+    //    }
+    //
+    //    for (let i = 0; i < 10; i){ // => 'i' is not modified in this loop.
+    //      console.log('Hello');
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-unmodified-loop-condition": "error", // AirBnB: "off"
+
+
+    // Disallow usage of expressions in statement position
+    // AirBnB:
+    "no-unused-expressions": ["error", {
+      "allowShortCircuit": false,
+      "allowTernary": false,
+      "allowTaggedTemplates": false
+    }],
+
+    // Disallow unused labels
+    // https://eslint.org/docs/rules/no-unused-labels
+    "no-unused-labels": "error", // AirBnB: "error"
+
+    // Disallow unnecessary .call() and .apply()
+    // We could turn this on, but I'll leave it off for now.
+    "no-useless-call": "off", // AirBnB: "off"
+
+    // Disallow unnecessary catch clauses.
+    "no-useless-catch": "error", // AirBnB: "error"
+
+    // Disallow useless string concatenation. Thus:
+    // const str = "I'm" + ' useless.'; // => Unexpected string concatenation of literals.
+    "no-useless-concat": "error", // AirBnB: "error"
+
+    // Disallow unnecessary string escaping. Thus:
+    // const str = 'Use\less'; // => Unnecessary escape character \l.
+    "no-useless-escape": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow redundant return; keywords. Thus:
+    //
+    //  function test(){
+    //    console.log('Testing 123...');
+    //    return; // => Unnecessary return statement.
+    //  }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-useless-return": "error", // AirBnB: "error"
+
+    // Disallow use of void operator
+    // https://eslint.org/docs/rules/no-void
+    "no-void": "error", // AirBnB: "error"
+
+    // Disallow usage of configurable warning terms in comments: e.g. todo
+    // AirBnB: ["off", { "terms": ["todo", "fixme", "xxx"], "location": "start" }]
+    // AirBnB turns it off, but if set to "error" it will generate an error for anything included
+    "no-warning-comments": ["off", { "terms": ["todo", "!", "note", "?", "warning", "danger"], "location": "start" }],
+
+    // Disallow use of the with statement
+    "no-with": "error",
+
+    // Require using Error objects as Promise rejection reasons
+    // https://eslint.org/docs/rules/prefer-promise-reject-errors
+    "prefer-promise-reject-errors": ["error", { "allowEmptyReject": true }],
+
+    // Suggest using named capture group in regular expression
+    // https://eslint.org/docs/rules/prefer-named-capture-group
+    "prefer-named-capture-group": "off", // AirBnB: "off"
+
+    // https://eslint.org/docs/rules/prefer-regex-literals
+    "prefer-regex-literals": "off", // AirBnB: "off"
+
+    // Require use of the second argument for parseInt()
+    "radix": "error", // AirBnB: "error"
+
+    // Require `await` in `async function` 
+    // AirBnB says: (note: this is a horrible rule that should never be used)
+    // I'm not sure why it's considered a bad rule, but I'll leave it off.
+    // https://eslint.org/docs/rules/require-await
+    "require-await": "off", // AirBnB: "off"
+
+    // Enforce the use of u flag on RegExp
+    // https://eslint.org/docs/rules/require-unicode-regexp
+    "require-unicode-regexp": "off",
+
+    // Requires to declare all vars on top of their containing scope.
+    // This is a good practice, but I'm sure it's something that I haven't
+    // always done in the past.
+    "vars-on-top": "error", // AirBnB: "error"
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require immediate function invocation to be wrapped in parentheses
+    //  var x = function (){
+    //    console.log('Hello.');
+    //  }(); // => Wrap an immediate function invocation in parentheses.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "wrap-iife": ["error", "outside", { "functionPrototypeMethods": false }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require or disallow Yoda conditions. Thus:
+    //
+    //   const color = 'red';
+    //
+    //    if ('red' === color) { // => Expected literal to be on the right side of ===
+    //      console.log("It's red.");
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "yoda": "error", // AirBnB: "error"
+
+
+    /* =======================================================
+                              ES6
+    ======================================================== */
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Enforces no braces where they can be omitted
+    //  AirBnB: ["error", "as-needed", { "requireReturnForObjectLiteral": false }]
+    //  I prefer to set "requireReturnForObjectLiteral": true such that:
+    //
+    //    const test1 = (x) => {
+    //    return x; // => Unexpected block statement around body;
+    //    };
+    //
+    //    const test3 = (a, b) => ({ a, b }); // => Expected block statement surrounding arrow body
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    "arrow-body-style": ["error", "as-needed", {
+      "requireReturnForObjectLiteral": true 
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require parens in arrow function arguments.
+    //  If we do this:
+    //
+    //    "arrow-parens": ["error", "as-needed", { 
+    //      "requireForBlockBody": false
+    //    }]
+    //
+    //
+    //  We get the following results.
+    //
+    //    const test1 = a => { // Okay because: "requireForBlockBody": false
+    //    if (!a){ return true; }
+    //    return false;
+    //    };
+    //
+    //    function test2(cb){
+    //    cb('Hello');
+    //    }
+    //
+    //    test2(msg => { // Okay because: "requireForBlockBody": false
+    //    console.log(msg);
+    //    });
+    //
+    //    const test3 = (msg) => msg; // => Unexpected parentheses around single function argument...
+    //
+    //  
+    //  However, there are contexts where I like using parens, and contexts where I don't.
+    //  Consequently, I'm turning this rule off.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "arrow-parens": "off", // AirBnB: "arrow-parens": ["error", "always"]
+    
+    // Require space before/after arrow function's arrow
+    // const test = (x)=> x;  // => Missing space before =>.
+    "arrow-spacing": ["error", { "before": true, "after": true }], // AirBnB: ["error", { "before": true, "after": true }]
+
+    // Verify super() callings in constructors
+    "constructor-super": "error", // AirBnB: "error"
+
+    // Enforce the spacing around the * in generator functions
+    "generator-star-spacing": ["error", { "before": false, "after": true }], // AirBnB: ["error", { "before": false, "after": true }]
+    
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow modifying variables of class declarations. Thus:
+    //
+    //    class Person {
+    //      constructor(name){
+    //        this.name = name;
+    //      }
+    //    }
+    //
+    //    Person = null; // => 'Person' is a class.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-class-assign": "error", // AirBnb: "error"
+
+    // Disallow arrow functions where they could be confused with comparisons
+    // https://eslint.org/docs/rules/no-confusing-arrow
+    "no-confusing-arrow": ["error", { "allowParens": true }], // AirBnB: ["error", { "allowParens": true }]
+
+    // Disallow modifying variables that are declared using const. Thus:
+    // const x = 1;
+    // x = 2; // => 'x' is constant.
+    "no-const-assign": "error", //  AirBnB: "error"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Disallow duplicate class members. Thus:
+    //
+    //  class Person {
+    //    constructor(name){
+    //      this.name = name;
+    //    }
+    //
+    //    getName(){
+    //      return this.name;
+    //    }
+    //
+    //    getName(){ // => Duplicate name 'getName'.
+    //      return this.name;
+    //    }
+    //  } 
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-dupe-class-members": "error", // AirBnB: "error"
+
+    // Disallow importing from the same path more than once
+    // https://eslint.org/docs/rules/no-duplicate-imports
+    // replaced by https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
+    "no-duplicate-imports": "off", // AirBnB: "off"
+
+    // Disallow symbol constructor
+    // https://eslint.org/docs/rules/no-new-symbol
+    "no-new-symbol": "error", // AirBnB: "error"
+
+    // Disallow specified names in exports
+    // https://eslint.org/docs/rules/no-restricted-exports
+    // Do this: enable, semver-minor, once eslint v7 is required (which is major)
+    // This is exactly what AirBnB does:
+    "no-restricted-exports": ["off", {
+      "restrictedNamedExports": [
+        "default", // use `export default` to provide a default export
+        "then"     // this will cause tons of confusion when your module is dynamically `import()`ed
+      ]
+    }],
+
+    // Disallow specific imports
+    // This is exactly what AirBnB does:
+    "no-restricted-imports": ["off", {
+      "paths": [],
+      "patterns": []
+    }],
+
+    // Disallow to use this/super before super() calling in constructors.
+    // https://eslint.org/docs/rules/no-this-before-super
+    "no-this-before-super": "error", // AirBnB: "error"
+
+    // Disallow useless computed property keys
+    "no-useless-computed-key": "error", //AirBnB: "error"
+
+    // disallow unnecessary constructor
+    "no-useless-constructor": "error", // AirBnB: "error"
+
+    // Disallow renaming import, export, and destructured assignments to the same name
+    // This is exactly what AirBnB does:
+    "no-useless-rename": ["error", {
+      "ignoreDestructuring": false,
+      "ignoreImport": false,
+      "ignoreExport": false
+    }],
+
+    // Require let or const instead of var
+    // I may turn this off later...
+    "no-var": "error", //AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require method and property shorthand syntax for object literals
+    //  AirBnb doe this:
+    //
+    //    "object-shorthand": ["error", "always", {
+    //      "ignoreConstructors": false,
+    //      "avoidQuotes": true
+    //    }]
+    //
+    //  I turned it off. There are times when I prefer to write it out because 
+    //  it's more readable.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "object-shorthand": "off",
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Suggest using arrow functions as callbacks.
+    //  AirBnB does this:
+    //
+    //   "prefer-arrow-callback": ["error", {
+    //      "allowNamedFunctions": false,
+    //      "allowUnboundThis": true
+    //   }]
+    //
+    //  I turned it off because I prefer having the flexibility to choose.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "prefer-arrow-callback": "off",
+
+    // Suggest using of const declaration for variables that are never modified after declared
+    // This is what AirBnB does:
+    "prefer-const": ["error", {
+      "destructuring": "any",
+      "ignoreReadBeforeAssign": true
+    }],
+
+    // Prefer destructuring from arrays and objects
+    // https://eslint.org/docs/rules/prefer-destructuring
+    // This is what AirBnB does:
+    "prefer-destructuring": ["error", {
+      "VariableDeclarator": {
+        "array": false,
+        "object": true
+      },
+      "AssignmentExpression": {
+        "array": true,
+        "object": false
+      }
+    }, {
+      "enforceForRenamedProperties": false
+    }],
+
+    // Disallow parseInt() in favor of binary, octal, and hexadecimal literals
+    // I may change this later.
+    "prefer-numeric-literals": "error", // AirBnB: "error"
+
+    // Suggest using Reflect methods where applicable
+    // https://eslint.org/docs/rules/prefer-reflect
+    "prefer-reflect": "off", // AirBnB: "off"
+
+    // use rest parameters instead of arguments
+    // https://eslint.org/docs/rules/prefer-rest-params
+    "prefer-rest-params": "error", // AirBnB: "error"
+
+    // Suggest using the spread operator instead of .apply()
+    // https://eslint.org/docs/rules/prefer-spread
+    "prefer-spread": "error", // AirBnB: "error"
+
+    // Suggest using template literals instead of string concatenation
+    // https://eslint.org/docs/rules/prefer-template
+    "prefer-template": "error", // AirBnB: "error"
+
+    // Disallow generator functions that do not have yield
+    // https://eslint.org/docs/rules/require-yield
+    "require-yield": "error", // AirBnB: "error"
+
+    // enforce spacing between object rest-spread
+    // https://eslint.org/docs/rules/rest-spread-spacing
+    "rest-spread-spacing": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // import sorting
+    // https://eslint.org/docs/rules/sort-imports
+    // This is what AirBnB does:
+    "sort-imports": ["off", {
+      "ignoreCase": false,
+      "ignoreDeclarationSort": false,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }],
+
+    // Require a Symbol description
+    // https://eslint.org/docs/rules/symbol-description
+    "symbol-description": "error", // AirBnB: "error"
+
+    // Enforce usage of spacing in template strings. Thus:
+    // const name = 'David';
+    // const str1 = `Hello ${name}`; // => Unexpected space(s) before '}'
+    // In this case we are prohibiting spaces, but it can also require spaces.
+    "template-curly-spacing": "error", // AirBnB: "error"
+
+    // Enforce spacing around the * in yield* expressions
+    // https://eslint.org/docs/rules/yield-star-spacing
+    "yield-star-spacing": ["error", "after"],
+
+
+    /* =======================================================
+                         Variables     
+    ======================================================= */
+
+
+    // Enforce or disallow variable initializations at definition
+    "init-declarations": "off", // AirBnB: "off"
+
+    // Disallow the catch clause parameter name being the same as a variable in the outer scope
+    "no-catch-shadow": "off", // AirBnB: "off,
+
+    // Disallow deletion of variables
+    // The purpose of the delete operator is to remove a property from an object. 
+    // Using the delete operator on a variable might lead to unexpected behavior.
+    "no-delete-var": "error", // AirBnB: "error"
+
+    // Disallow labels that share a name with a variable
+    // https://eslint.org/docs/rules/no-label-var
+    "no-label-var": "error", // AirBnB: "error"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Disallow specific globals. This is what AirBnB does:
+    //
+    // 'no-restricted-globals': [
+    //   'error',
+    //   {
+    //     name: 'isFinite',
+    //     message:
+    //       'Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite',
+    //   },
+    //   {
+    //     name: 'isNaN',
+    //     message:
+    //       'Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan',
+    //   },
+    // ].concat(confusingBrowserGlobals),
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow declaration of variables already declared in the outer scope
+    //  The rationale for disallowing them is that it can cause confusion while 
+    //  reading the code and it's impossible to access the global variable.
+    //  Be that as it may, I prefer the flexibility, and don't necessarily agree
+    //  that it is always confusing.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-shadow": "off", // AirBnB: "error"
+
+    // Disallow shadowing of names such as arguments
+    "no-shadow-restricted-names": "error", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow use of undeclared variables unless mentioned in a /*global */ block
+    //
+    //    const n = x + 1; // => 'x' is not defined.
+    //
+    //    function test(){
+    //      y = 1; // => 'y' is not defined.
+    //      console.log("Testing 123...");
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-undef": "error", // AirBnB: "error"
+
+    // Disallow use of undefined when initializing variables. Thus:
+    // let x = undefined; // => It's not necessary to initialize 'x' to undefined.
+    // x = 1;
+    "no-undef-init": "error", // AirBnB: "error:
+
+    // disallow use of undefined variable
+    // https://eslint.org/docs/rules/no-undefined
+
+    "no-undefined": "off", // AirBnB: "off"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow declaration of variables that are not used in the code
+    //  AirBnB does this:
+    //
+    //    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }],
+    //
+    //!  I may want to come back and fine-tune this one.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-unused-vars": "off",
+
+    // Disallow use of variables before they are defined
+    // This is what AirBnB does:
+    "no-use-before-define": ["error", { "functions": true, "classes": true, "variables": true }],
+
+
+    /* =======================================================
+                           Style
+    ======================================================== */
+
+
+    // Enforce line breaks after opening and before closing array brackets
+    // This is what AirBnB does:
+    "array-bracket-newline": ["off", "consistent"], // object option alternative: { multiline: true, minItems: 3 }
+
+    // Enforce line breaks between array elements
+    // This is what AirBnB does:
+    "array-element-newline": ["off", { "multiline": true, "minItems": 3 }],
+
+    // Enforce spacing inside array brackets. Thus:
+    // const numbers = [1, 2, 3 ]; // => There should be no space before ']'
+    "array-bracket-spacing": ["error", "never"],
+
+    // Enforce spacing inside single-line blocks
+    // let condition = false;
+    // condition     = true;
+    // if (condition){console.log("It's true.");}  // => Requires space...
+    "block-spacing": ["error", "always"], // AirBnB: ["error", "always"]
+
+    // Enforce one true brace style
+    // This is what AirBnB does:
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+
+    // Require camel case names. Thus:
+    // const first_name = 'David'; // => Identifier 'first_name' is not in camel case.
+    // This is what AirBnB does:
+    "camelcase": ["error", { "properties": "never", "ignoreDestructuring": false }],
+
+    // Enforce or disallow capitalization of the first letter of a comment
+    // This is what AirBnB does:
+    "capitalized-comments": ["off", "never", {
+      "line": {
+        "ignorePattern": ".*",
+        "ignoreInlineComments": true,
+        "ignoreConsecutiveComments": true
+      },
+      "block": {
+        "ignorePattern": ".*",
+        "ignoreInlineComments": true,
+        "ignoreConsecutiveComments": true
+      }
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require trailing commas in multiline object literals
+    //  I turned it off. I don't like trailing commas at all.
+    //  This is what AirBnB does:
+    //
+    //  "comma-dangle": ["error", {
+    //    "arrays": "always-multiline",
+    //    "objects": "always-multiline",
+    //    "imports": "always-multiline",
+    //    "exports": "always-multiline",
+    //    "functions": "always-multiline"
+    //  }]
+    //
+    //////////////////////////////////////////////////////////////////////
+    "comma-dangle": "off",
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Enforce spacing before and after comma
+    //  This is how AirBnB does it:
+    //
+    //    "comma-spacing": ["error", { "before": false, "after": true }]
+    //
+    //  
+    //  This is a good practice. I'll leave it on for now, but I know I'm lazy
+    //  about this, and will get errors a lot.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "comma-spacing": ["error", { "before": false, "after": true }], // AirBnB: ["error", { "before": false, "after": true }]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Enforce one true comma style.
+    //
+    //    const fruitsBad = ['apples'
+    //      , 'oranges']; // => ',' should be placed last.
+    //
+    //
+    //    const fruitsGood = ['apples',
+    //      'oranges'];
+    //
+    //
+    //  I will go with what AirBnB does until I run into an issue.
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    // This is what AirBnB does:
+    "comma-style": ["error", "last", {
+      "exceptions": {
+        "ArrayExpression": false,
+        "ArrayPattern": false,
+        "ArrowFunctionExpression": false,
+        "CallExpression": false,
+        "FunctionDeclaration": false,
+        "FunctionExpression": false,
+        "ImportDeclaration": false,
+        "ObjectExpression": false,
+        "ObjectPattern": false,
+        "VariableDeclaration": false,
+        "NewExpression": false
+      }
+    }],
+
+    // Disallow padding inside computed properties. Thus:
+    // const obj = { 'first-name': 'David' };
+    // console.log(obj['first-name' ]); // => There should be no space before ']'.
+    "computed-property-spacing": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Enforces consistent naming when capturing the current execution context
+    "consistent-this": "off", // AirBnB: "off"
+
+    // Enforce newline at the end of file, with no multiple empty lines
+    // There are good reasons for doing this, but I'm going to turn it off all the same
+    // because it's always in my face.
+    "eol-last": "off", // AirBnB: ["error", "always"]
+
+    // https://eslint.org/docs/rules/function-call-argument-newline
+    "function-call-argument-newline": ["off", "consistent"], // AirBnB: ["off", "consistent"]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Enforce spacing between functions and their invocations.
+    //  This rule can potentially overlap with no-spaced-func.
+    //
+    //    console.log ('Testing 123...');
+    //    // => Unexpected space between function name and paren. eslint(no-spaced-func)
+    //    // => Unexpected whitespace between function name and paren. eslint(func-call-spacing)
+    //
+    //////////////////////////////////////////////////////////////////////
+    "func-call-spacing": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Requires function names to match the name of the variable or property 
+    // to which they are assigned. This is what AirBnB does:
+    "func-name-matching": ["off", "always", {
+      "includeCommonJSModuleExports": false,
+      "considerPropertyDescriptor": true
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require function expressions to have a name. Thus:
+    //
+    //    const cat = {
+    //      meow: function(){ console.log('Meow!'); } // => Unexpected unnamed method 'meow'.
+    //    };
+    //
+    //////////////////////////////////////////////////////////////////////
+    "func-names": "off", // AirBnB: "warn"
+
+    // Enforces use of function declarations or expressions
+    // This is a cool option, but too restricted for me.
+    "func-style": ["off", "expression"], // AirBnb: ["off", "expression"]
+
+    // Enforce consistent line breaks inside function parentheses
+    // "consistent" requires consistent usage of linebreaks for each pair of parentheses. 
+    // It reports an error if one parenthesis in the pair has a linebreak inside it and the other parenthesis does not.
+    "function-paren-newline": ["error", "consistent"], // AirBnB: ["error", "consistent"]
+
+    // Blacklist certain identifiers to prevent them being used
+    // https://eslint.org/docs/rules/id-blacklist
+    // Do this: semver-major, remove once eslint v7.4+ is required
+    "id-blacklist": "off", // AirBnB: "off"
+
+    // Disallow specified identifiers
+    // https://eslint.org/docs/rules/id-denylist
+    "id-denylist": "off", // AirBnB: "off"
+
+    // This option enforces minimum and maximum identifier lengths
+    // (variable names, property names etc.)
+    "id-length": "off", // AirBnB: "off"
+
+    // Require identifiers to match the provided regular expression
+    "id-match": "off", // AirBnB: "off"
+
+    // Enforce the location of arrow function bodies with implicit returns. Thus:
+    // const test = (msg) =>
+    //   msg; // => Expected no linebreat before this expression.
+    "implicit-arrow-linebreak": ["error", "beside"],
+
+    // This option sets a specific tab width for your code
+    // This is what AirBnB does:
+    "indent": ["error", 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": 1,
+      "outerIIFEBody": 1,
+      // MemberExpression: null,
+      "FunctionDeclaration": {
+        "parameters": 1,
+        "body": 1
+      },
+      "FunctionExpression": {
+        "parameters": 1,
+        "body": 1
+      },
+      "CallExpression": {
+        "arguments": 1
+      },
+      "ArrayExpression": 1,
+      "ObjectExpression": 1,
+      "ImportDeclaration": 1,
+      "flatTernaryExpressions": false,
+      // list derived from https://github.com/benjamn/ast-types/blob/HEAD/def/jsx.js
+      "ignoredNodes": [
+        "JSXElement", "JSXElement > *", "JSXAttribute", "JSXIdentifier", "JSXNamespacedName", 
+        "JSXMemberExpression", "JSXSpreadAttribute", "JSXExpressionContainer", "JSXOpeningElement", 
+        "JSXClosingElement", "JSXFragment", "JSXOpeningFragment", "JSXClosingFragment", "JSXText", 
+        "JSXEmptyExpression", "JSXSpreadChild"
+      ],
+      "ignoreComments": false
+    }],
+
+    // specify whether double or single quotes should be used in JSX attributes
+    // https://eslint.org/docs/rules/jsx-quotes
+    "jsx-quotes": ["off", "prefer-double"], // AirBnB: ["off", "prefer-double"]
+
+    // Enforces spacing between keys and values in object literal properties
+    // Sometime I like to vertical align property values, so I'm turning this off.
+    "key-spacing": "off", // AirBnB: ["error", { "beforeColon": false, "afterColon": true }]
+
+    // Require a space before & after certain keywords
+    // This is what AirBnB does:
+    "keyword-spacing": ["error", {
+      "before": true,
+      "after": true,
+      "overrides": {
+        "return": { "after": true },
+        "throw": { "after": true },
+        "case": { "after": true }
+      }
+    }],
+
+    // Enforce position of line comments
+    // https://eslint.org/docs/rules/line-comment-position
+    // This is what AirBnB does:
+    "line-comment-position": ["off", {
+      "position": "above",
+      "ignorePattern": "",
+      "applyDefaultPatterns": true
+    }],
+
+    // Disallow mixed 'LF' and 'CRLF' as linebreaks
+    // https://eslint.org/docs/rules/linebreak-style
+    "linebreak-style": ["error", "unix"], // AirBnB: ["error", "unix"]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require or disallow an empty line between class members. Thus:
+    //
+    //    class Person {
+    //      constructor(greeting, profanity){
+    //        this.greeting = greeting;
+    //        this.profanity = profanity;
+    //      }
+    //    
+    //      greet(){ console.log(this.greeting); }
+    //      yell(){ console.log(this.profanity); } // => Expected blank lines between class members.
+    //    }
+    //
+    //  Here we could change to "exceptAfterSingleLine": true, and we wouldn't get the error.
+    //  AirBnB does this: ["error", "always", { "exceptAfterSingleLine": false }]
+    //
+    //////////////////////////////////////////////////////////////////////
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": false }],
+
+    // Enforces empty lines around comments
+    "lines-around-comment": "off", // AirBnB: "off"
+
+    // Require or disallow newlines around directives
+    // 'use strict'; // => Expected newline after "use strict" directive.
+    // const test = 'Testing 123...';
+    "lines-around-directive": ["error", {
+      "before": "always",
+      "after": "always"
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Specify the maximum depth that blocks can be nested
+    //  AirBnB has it turned off, but suggests that 4 should be the max.
+    //  Here's what it would look like if we set it to "error":
+    //
+    //   for (let i = 0; i < 10; i++){
+    //     for (let i = 0; i < 10; i++){
+    //       for (let i = 0; i < 10; i++){
+    //         for (let i = 0; i < 10; i++){
+    //           for (let i = 0; i < 10; i++){ // => Blocks are nested too deeply.
+    //             console.log('Testing 123...');
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "max-depth": ["off", 4], // AirBnB: ["off", 4]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Specify the maximum length of a line in your program
+    //  Here's what AirBnB does:
+    //
+    //    "max-len": ["error", 100, 2, {
+    //      "ignoreUrls": true,
+    //      "ignoreComments": false,
+    //      "ignoreRegExpLiterals": true,
+    //      "ignoreStrings": true,
+    //      "ignoreTemplateLiterals": true
+    //    }]
+    //
+    //////////////////////////////////////////////////////////////////////
+    "max-len": "off",
+
+    // Specify the max number of lines in a file
+    // This is what AirBnB does:
+    "max-lines": ["off", {
+      "max": 300,
+      "skipBlankLines": true,
+      "skipComments": true
+    }],
+
+    // Enforce a maximum function length
+    // This is what AirBnB does:
+    "max-lines-per-function": ["off", {
+      "max": 50,
+      "skipBlankLines": true,
+      "skipComments": true,
+      "IIFEs": true
+    }],
+
+    // Specify the maximum depth callbacks can be nested
+    "max-nested-callbacks": "off", // AirBnB: "off"
+
+    // Limits the number of parameters that can be used in the function declaration.
+    "max-params": ["off", 3], // AirBnB: ["off", 3]
+
+    // Specify the maximum number of statement allowed in a function
+    "max-statements": ["off", 10], // AirBnB: ["off", 10]
+
+    // Restrict the number of statements per line
+    "max-statements-per-line": ["off", { "max": 1 }], // AirBnB: ["off", { "max": 1 }]
+
+    // Enforce a particular style for multiline comments
+    // https://eslint.org/docs/rules/multiline-comment-style
+    "multiline-comment-style": ["off", "starred-block"], // AirBnB: ["off", "starred-block"]
+
+    // Require multiline ternary
+    "multiline-ternary": ["off", "never"], // AirBnB: ["off", "never"]
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require a capital letter for constructors. Thus:
+    //
+    //    function person(first, last) {
+    //      this.firstName = first;
+    //      this.lastName = last;
+    //    }
+    //
+    //    const person1 = new person('David', 'Codina'); // => A constructor name should not start with a lowercase letter.
+    //
+    //  Notice that the issue doesn't get flagged until an instance is created.
+    //
+    //////////////////////////////////////////////////////////////////////
+    // This is what AirBnB does:
+    "new-cap": ["error", {
+      "newIsCap": true,
+      "newIsCapExceptions": [],
+      "capIsNew": false,
+      "capIsNewExceptions": ["Immutable.Map", "Immutable.Set", "Immutable.List"]
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow the omission of parentheses when invoking a constructor 
+    //  with no arguments. Thus:
+    //
+    //  class Test {
+    //    constructor(){
+    //      console.log('A new Test instance has been created.');
+    //    }
+    //  }
+    //
+    //  const test = new Test; // => Misssing '()' invoking a constructor.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "new-parens": "error", // AirBnB: "error"
+
+    // Allow/disallow an empty newline after var statement
+    "newline-after-var": "off", // AirBnB: "off"
+
+    // https://eslint.org/docs/rules/newline-before-return
+    "newline-before-return": "off", // AirBnB: "off"
+
+    // Enforces new line after each method call in the chain to make it
+    // more readable and easy to maintain
+    // I may end up changing this.
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 4 }], // AirBnB: ["error", { "ignoreChainWithDepth": 4 }]
+
+    // Disallow use of the Array constructor
+    "no-array-constructor": "error", // AirBnB: "error"
+
+    // Disallow use of bitwise operators
+    // The use of bitwise operators in JavaScript is very rare and 
+    //often & or | is simply a mistyped && or ||, which will lead to unexpected behavior.
+    "no-bitwise": "error", // AirBnB: "error"
+
+    // Disallow use of the continue statement
+    // I think 'continue' is okay to use. If you end up getting this error,
+    // then consider looking at how you can refactor your code block.
+    // See here for examples: https://eslint.org/docs/rules/no-continue
+    "no-continue": "error", // AirBnB: "error"
+
+    // Disallow comments inline after code
+    "no-inline-comments": "off", // AirBnB: "off"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow if as the only statement in an else block. Thus:
+    //
+    //    let condition = false;
+    //    condition = true;
+    //
+    //    if (condition){
+    //      console.log('The condition is true.');
+    //    } else {
+    //      if (!condition){
+    //        console.log('The condition is not true.'); // => Unexpected if as the only statement in an else block.
+    //      }
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-lonely-if": "error",
+
+    // Disallow un-paren'd mixes of different operators
+    // This is what AirBnB does:
+    "no-mixed-operators": ["error", {
+      // the list of arthmetic groups disallows mixing `%` and `**`
+      // with other arithmetic operators.
+      "groups": [
+        ["%", "**"],
+        ["%", "+"],
+        ["%", "-"],
+        ["%", "*"],
+        ["%", "/"],
+        ["/", "*"],
+        ["&", "|", "<<", ">>", ">>>"],
+        ["==", "!=", "===", "!=="],
+        ["&&", "||"]
+      ],
+      "allowSamePrecedence": false
+    }],
+
+    // Disallow mixed spaces and tabs for indentation
+    "no-mixed-spaces-and-tabs": "error", // AirBnB: "error"
+
+    // Disallow use of chained assignment expressions
+    // let a = 1;
+    // let b = 2;
+    // a = b = 5; // => Unexpected chainged assignment.
+    "no-multi-assign": ["error"], // AirBnB: "error"
+
+    // Disallow multiple empty lines, only one newline at the end, and no new lines at the beginning
+    // AirBnB does this: ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0 }]
+    "no-multiple-empty-lines": "off",
+
+    // Disallow negated conditions
+    "no-negated-condition": "off", // AirBnB: "off"
+
+    // Disallow nested ternary expressions
+    "no-nested-ternary": "error",  // AirBnB: "error"
+
+    // Disallow use of the Object constructor
+    "no-new-object": "error", // AirBnB: "error"
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow use of unary operators, ++ and --
+    //  Because the unary ++ and -- operators are subject to automatic semicolon insertion, 
+    //  differences in whitespace can change semantics of source code.
+    //  I've never had issues with this. ESLint recommends using i += 1 instead.
+    //  I'm turning this off.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-plusplus": "off", // AirBnB: "error"
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Here's what AirBnB does for 'no-restricted-syntax'
+    //  I will not reproduce it here, since this is an overwrite file.
+    //
+    // // disallow certain syntax forms
+    // // https://eslint.org/docs/rules/no-restricted-syntax
+    // 'no-restricted-syntax': [
+    //   'error',
+    //   {
+    //     selector: 'ForInStatement',
+    //     message: 'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.',
+    //   },
+    //   {
+    //     selector: 'ForOfStatement',
+    //     message: 'iterators/generators require regenerator-runtime, which is too heavyweight for this guide to allow them. Separately, loops should be avoided in favor of array iterations.',
+    //   },
+    //   {
+    //     selector: 'LabeledStatement',
+    //     message: 'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.',
+    //   },
+    //   {
+    //     selector: 'WithStatement',
+    //     message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
+    //   },
+    // ],
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    // Disallow space between function identifier and application
+    "no-spaced-func": "error", // AirBnB: "error"
+
+    // Disallow tab characters entirely
+    "no-tabs": "error", // AirBnB: "error"
+
+    // Disallow the use of ternary operators
+    "no-ternary": "off", // AirBnB: "off"
+
+    // Disallow trailing whitespace at the end of lines
+    // This is what AirBnB does:
+    "no-trailing-spaces": ["error", {
+      "skipBlankLines": false,
+      "ignoreComments": false
+    }],
+    
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow dangling underscores in identifiers. Thus
+    //  This is what AirBnB does:
+    //
+    //    "no-underscore-dangle": ["error", {
+    //      "allow": [],
+    //      "allowAfterThis": false,
+    //      "allowAfterSuper": false,
+    //      "enforceInMethodNames": true
+    //    }]
+    //
+    //  But this setup would prohibit using them to indicate private properties.
+    //  For that reason, I'm going to shut it off. I'm sure there's a way to 
+    //  fine-tune it, but I'm just going to shut it off.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-underscore-dangle": "off",
+
+    //////////////////////////////////////////////////////////////////////
+    //  Disallow the use of Boolean literals in conditional expressions
+    //  also, prefer `a || b` over `a ? a : b`
+    //  It's a common mistake in JavaScript to use a conditional expression to 
+    //  select between two Boolean values instead of using ! to convert the test to a 
+    //  Boolean. For example:
+    //
+    //   const x = 1;
+    //   const result = x === 2 ? true : false;  // => Unnecessary use of boolean literal in conditional expression.
+    //   console.log(result);
+    //
+    //   const x = 1;
+    //   const result = x === 2; // Okay
+    //   console.log(result);
+    //
+    //////////////////////////////////////////////////////////////////////
+    "no-unneeded-ternary": ["error", { "defaultAssignment": false }], // AirBnB: ["error", { "defaultAssignment": false }]
+
+    // Disallow whitespace before properties
+    // I may end up changing this later.
+    "no-whitespace-before-property": "error", // AirBnB: "error"
+
+    // Enforce the location of single-line statements
+    // https://eslint.org/docs/rules/nonblock-statement-body-position
+    "nonblock-statement-body-position": ["error", "beside", { "overrides": {} }], // AirBnB: ["error", "beside", { "overrides": {} }]
+
+    // Require padding inside curly braces. Thus:
+    // const obj = { name: 'David'}; // => A space is required before '}'.
+    "object-curly-spacing": ["error", "always"], // AirBnB: ["error", "always"]
+
+    // Enforce line breaks between braces
+    // const obj = { a: 'a', b: 'b', c: 'c', d: 'd' }; // => Expected a line break after this opening brace.
+    // This is what AirBnB does. I may change this later.
+    "object-curly-newline": ["error", {
+      "ObjectExpression": { "minProperties": 4, "multiline": true, "consistent": true },
+      "ObjectPattern": { "minProperties": 4, "multiline": true, "consistent": true },
+      "ImportDeclaration": { "minProperties": 4, "multiline": true, "consistent": true },
+      "ExportDeclaration": { "minProperties": 4, "multiline": true, "consistent": true }
+    }],
+
+    // Enforce "same line" or "multiple line" on object properties.
+    // This is what AirBnB does:
+    "object-property-newline": ["error", {
+      "allowAllPropertiesOnSameLine": true
+    }],
+
+    // Allow just one var statement per function. Thus:
+    // function test(){
+    //   let bar,
+    //     baz; // => Split 'let' declarations into multiple statements.
+    // }
+    "one-var": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Require a newline around variable declaration
+    "one-var-declaration-per-line": ["error", "always"], // AirBnB: ["error", "always"] 
+
+    // Require assignment operator shorthand where possible or prohibit it entirely
+    // let n = 1;
+    // n = n + 1; // => Assignment can be replaced with operator assignment.
+    "operator-assignment": ["error", "always"], // AirBnB: ["error", "always"]
+
+    // Requires operator at the beginning of the line in multiline statements
+    // AirBnB: ["error", "before", { "overrides": { "=": "none" } }]
+    "operator-linebreak": "off",
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Disallow padding within blocks. Thus:
+    //
+    //    function test(){
+    //
+    //      console.log('Hello');  // => Block mmust not be padded by blank lines.
+    //    }
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    // This is what AirBnB does:
+    "padded-blocks": ["error", {
+      "blocks": "never",
+      "classes": "never",
+      "switches": "never"
+    }, {
+      "allowSingleLineBlocks": true
+    }],
+
+    // Require or disallow padding lines between statements
+    // https://eslint.org/docs/rules/padding-line-between-statements
+    "padding-line-between-statements": "off", // AirBnB: "off"
+
+    // Disallow the use of Math.pow in favor of the ** operator
+    "prefer-exponentiation-operator": "off", // AirBnB: "off"
+
+    // Prefer use of an object spread over Object.assign
+    // https://eslint.org/docs/rules/prefer-object-spread
+    "prefer-object-spread": "error", // AirBnB: "error"
+
+    // Require quotes around object literal property names
+    // This is what AirBnB does:
+    "quote-props": ["error", "as-needed", { "keywords": false, "unnecessary": true, "numbers": false }],
+
+    // Specify whether double or single quotes should be used.
+    // const name = "David"; // => String must use singlequote.
+    "quotes": ["error", "single", { "avoidEscape": true }],
+
+    // Do not require jsdoc
+    "require-jsdoc": "off", // AirBnB: "off"
+
+    // Require or disallow use of semicolons instead of ASI. Thus:
+    // const x = 1 // => Missing semicolon.
+    "semi": ["error", "always"], // AirBnB: ["error", "always"]
+
+    // Enforce spacing before and after semicolons
+    "semi-spacing": ["error", { "before": false, "after": true }], // AirBnB: ["error", { "before": false, "after": true }]
+
+    // Enforce location of semicolons. Thus:
+    // const x = 2
+    // ; // => Expected this semicolon to be at the end of the previous line.
+    "semi-style": ["error", "last"], // AirBnB: ["error", "last"]
+
+    // Requires object keys to be sorted. This is what AirBnB does:
+    "sort-keys": ["off", "asc", { "caseSensitive": false, "natural": true }],
+
+    // Sort variables within the same declaration block
+    "sort-vars": "off", // AirBnB: "off"
+
+    // Require or disallow space before blocks
+    "space-before-blocks":"off", // AirBnB: "error"
+ 
+    //////////////////////////////////////////////////////////////////////
+    //
+    // Require or disallow space before function opening parenthesis
+    //
+    // This is what AirBnB does:
+    // "space-before-function-paren": ["error", {
+    //   "anonymous": "always",
+    //   "named": "never",
+    //   "asyncArrow": "always"
+    // }]
+    //
+    //////////////////////////////////////////////////////////////////////
+    "space-before-function-paren":"off",
+
+    // Require or disallow spaces inside parentheses
+    "space-in-parens": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Require spaces around operators
+    "space-infix-ops": "error", // AirBnB: "error"
+
+    // Require or disallow spaces before/after unary operators
+    // This is what AirBnB does:
+    "space-unary-ops": ["error", {
+      "words": true,
+      "nonwords": false,
+      "overrides": {
+      }
+    }],
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    //  Require or disallow a space immediately following the // or /* in a comment
+    //  This is what AirBnB does:
+    //
+    //  "spaced-comment": ["error", "always", {
+    //    "line": {
+    //      "exceptions": ["-", "+"],
+    //      "markers": ["=", "!", "/"] // space here to support sprockets directives, slash for TS /// comments
+    //    },
+    //    "block": {
+    //      "exceptions": ["-", "+"],
+    //      "markers": ["=", "!", ":", "::"], // space here to support sprockets directives and flow comment types
+    //      "balanced": true
+    //    }
+    //  }]
+    //
+    //  This will end up messing with some of my VSCode Better Comments customizations.
+    //  Rather than fine-tuning it, I'm just going to turn it off.
+    //
+    //////////////////////////////////////////////////////////////////////
+    "spaced-comment": "off",
+
+    // Enforce spacing around colons of switch statements
+    // This is what AirBnB does:
+    "switch-colon-spacing": ["error", { "after": true, "before": false }],
+
+    // Require or disallow spacing between template tags and their literals
+    "template-tag-spacing": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Require or disallow the Unicode Byte Order Mark
+    "unicode-bom": ["error", "never"], // AirBnB: ["error", "never"]
+
+    // Require regex literals to be wrapped in parentheses
+    "wrap-regex": "off"
+
+
+    /* =======================================================
+                            Node   
+    ======================================================= */
+
+    // ...
+
+    
+  } // End of rules.
+}
